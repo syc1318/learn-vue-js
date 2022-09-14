@@ -5,27 +5,46 @@
     <span class="addContainer">
         <i class="fas fa-plus addBtn"></i>
     </span>
+    <AModal v-if="showModal" @close="showModal = false">
+        <h3 slot="header">
+            경고!
+            <button class="closeModalBtn" @click="showModal=false">X</button>
+        </h3>
+        <h3 slot="body">
+            비어있습니다.
+        </h3>
+        <h3 slot="footer">
+            copyright
+        </h3>
+    </AModal>
   </div>
 </template>
 
 <script>
+import AModal from './common/AModal.vue';
 export default {
     data: function(){
         return{
-            newTodoItem: ""
+            newTodoItem: "",
+            showModal: false
         }
     },
     methods:{
         addTodo: function(){
             if(this.newTodoItem !==''){
-                var obj = {completed: false, item: this.newTodoItem}
-                localStorage.setItem(this.newTodoItem, JSON.stringify(obj)); //JSON.stringfy = 자바스크립트를 스트링으로 바꿔주는?
+                // this.$emit('이벤트 이름',인자1,인자2,...);
+                this.$emit('addTodoItem', this.newTodoItem);
                 this.clearInput();
+            }else{
+                this.showModal = !this.showModal;
             }
         },
         clearInput:function(){
             this.newTodoItem='';
         }
+    },
+    components:{
+        AModal:AModal
     }
 }
 </script>
@@ -54,5 +73,8 @@ input:focus{
 .addBtn{
     color: white;
     vertical-align: middle;
+}
+.closeModalBtn{
+    color:#42b983;
 }
 </style>
