@@ -2,7 +2,7 @@
   <div id="app">
     <TodoHeader></TodoHeader>
     <!-- <TodoInput v-on:하위컴포넌트에서 발생하는 이벤트 이름="현재 컴포넌트의 메서드 명"></TodoInput> -->
-    <TodoInput v-on:addTodoItem="addOneItem"></TodoInput>
+    <TodoInput></TodoInput>
     <!-- <TodoList v-bind:내려보낼 프롭스 속성 이름 ="현재 컴포넌트 데이터속성"></TodoList> -->
     <TodoList v-bind:propsdata ="todoItems" v-on:removeItem="removeOneItem" v-on:toggleItem="toggleOneItem"></TodoList>
     <TodoFooter v-on:clearAll="clearAllItems"></TodoFooter>
@@ -21,11 +21,11 @@ export default {
     }
   },
   methods:{
-    addOneItem(todoItem){
-      const obj = {completed: false, item:todoItem};
-      localStorage.setItem(todoItem, JSON.stringify(obj)); //JSON.stringfy = 자바스크립트를 스트링으로 바꿔주는?
-      this.todoItems.push(obj)
-    },
+    // addOneItem(todoItem){
+    //   const obj = {completed: false, item:todoItem};
+    //   localStorage.setItem(todoItem, JSON.stringify(obj)); //JSON.stringfy = 자바스크립트를 스트링으로 바꿔주는?
+    //   this.todoItems.push(obj)
+    // },
     removeOneItem(todoItem, index){
       localStorage.removeItem(todoItem.item);
       this.todoItems.splice(index, 1);
@@ -41,15 +41,7 @@ export default {
       this.todoItems=[];
     }
   },
-  created(){
-    if(localStorage.length >0){
-      for(let i =0; i<localStorage.length;i++){
-        if(localStorage.key(i) !== 'loglevel:web-dev-server'){
-          this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
-        }
-      }
-    }
-  },
+  
 
   components:{
     TodoHeader,
